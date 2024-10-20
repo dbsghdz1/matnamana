@@ -106,5 +106,36 @@ escaping 클로저를 사용해 보았으나, 원하는 대로 동작하지 않�
 ❗ 해결
 private let authResultSubject = PublishSubject<Bool>()를 생성하여 인증이 완료된 시점에 Bool 값을 넘겨주는 방식으로 해결.
 
-Modal을 dismiss한 후에 navigationController를 pop해야 하는 경우
+### Modal을 dismiss한 후에 navigationController를 pop해야 하는 경우
 
+```swift
+addFriendView.sendButton.rx.tap
+  .subscribe(onNext: { [weak self] in
+    guard let self = self else { return }
+    let input = AddFriendViewModel.Input(addFriend: .just([userInfo,
+                                                           self.friendType,
+                                                           userImage,
+                                                           self.status,
+                                                           self.userName
+                                                          ]))
+    let output = self.viewModel.transform(input: input)
+    
+    output.addFriendResult
+      .drive(onNext: { [weak self] success in
+        guard let self else { return }
+        if success {
+          print("성공")
+        } else {
+          print("실패")
+        }
+        self.dismiss(animated: true) {
+          self.navigationController?.popViewController(animated: true)
+        }
+      }).disposed(by: self.disposeBag)
+  }).disposed(by: disposeBag)
+```
+❓ 문제
+Modal로 띄운 Controller가 Navigation Stack에 포함되지 않아서 self.pop이 실행되지 않았음.
+
+❗ 해결
+모달이 닫힐 때 실행될 completionHandler를 정의하여, dismiss 후 navigation이 pop되도록 처리.
