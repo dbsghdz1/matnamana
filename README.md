@@ -37,3 +37,7 @@
 ## 📱 주요 기능
 
 기능 시연 영상 : [https://youtu.be/EXk_NXo28A4](https://www.youtube.com/watch?v=HtArwd0cgyw)
+
+## 📱 스크린샷
+
+<img width="982" alt="스크린샷 2024-10-21 02 03 41" src="https://github.com/user-attachments/assets/feda14f3-236a-4dfc-9ce5-e03cc7fc93a0">
