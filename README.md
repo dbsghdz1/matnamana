@@ -44,7 +44,7 @@
 
 ## 5. 트러블 슈팅
 
-### 친구에게 질문을 보낼 때 앱이 크래시가 났던 경우.
+### 친구에게 질문을 보낼 때 앱이 크래시가 났던 경우.(최 건)
 
 - 애플 로그인, 카카오톡 로그인 구현 중 화면전환
 
@@ -98,3 +98,13 @@ private let authResultSubject = PublishSubject<Bool>()
       }
     }
   }
+```
+❓ 문제
+startSignInWithAppleFlow 실행 후 로그인 완료 후에 화면 전환이 이루어져야 하지만, startSignInWithAppleFlow 실행 직후 화면 전환이 발생해 문제가 생김.
+escaping 클로저를 사용해 보았으나, 원하는 대로 동작하지 않음.
+
+❗ 해결
+private let authResultSubject = PublishSubject<Bool>()를 생성하여 인증이 완료된 시점에 Bool 값을 넘겨주는 방식으로 해결.
+
+Modal을 dismiss한 후에 navigationController를 pop해야 하는 경우
+
