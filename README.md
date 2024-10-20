@@ -32,11 +32,3 @@ SnapKit, Then
 ## 📱 주요 기능
 
 기능 시연 영상 : [https://youtu.be/EXk_NXo28A4](https://www.youtube.com/watch?v=HtArwd0cgyw)
-
-                    
-                    
-                    <img src="https://github.com/user-attachments/assets/8912f231-6e0d-4d1a-84c7-16b47bdb9616" alt="세종도시교통공사 답변 스크린샷 1" width="">
-                    
-                    <img src="https://github.com/user-attachments/assets/43db31a4-3838-4b79-9b00-3ef56b1c73d0" alt="세종도시교통공사 답변 스크린샷 2" width="">
-                    
-        - **인천교통공사 대상으로 공공데이터 제공 분쟁조정 신청 (9월 3일)**
