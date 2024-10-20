@@ -41,3 +41,60 @@
 ## 📱 스크린샷
 
 <img width="982" alt="스크린샷 2024-10-21 02 03 41" src="https://github.com/user-attachments/assets/feda14f3-236a-4dfc-9ce5-e03cc7fc93a0">
+
+## 5. 트러블 슈팅
+
+### 친구에게 질문을 보낼 때 앱이 크래시가 났던 경우.
+
+- 애플 로그인, 카카오톡 로그인 구현 중 화면전환
+
+```swift
+private let authResultSubject = PublishSubject<Bool>()
+  func authResultObservable() -> Observable<Bool> {
+    return authResultSubject.asObservable()
+  }
+  
+  func startSignInWithAppleFlow(/*completion: @escaping (Result<Void, Error>) -> Void*/) {
+    let nonce = randomNonceString()
+    currentNonce = nonce
+    let appleIDProvider = ASAuthorizationAppleIDProvider()
+    let request = appleIDProvider.createRequest()
+    request.requestedScopes = [.fullName, .email]
+    request.nonce = sha256(nonce)
+    
+    let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+    authorizationController.delegate = self
+    authorizationController.presentationContextProvider = self
+    authorizationController.performRequests()
+  }
+  
+  func authorizationController(controller: ASAuthorizationController,
+                               didCompleteWithAuthorization authorization: ASAuthorization) {
+    if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+      guard let nonce = currentNonce else {
+        fatalError("Invalid state: A login callback was received, but no login request was sent.")
+      }
+      guard let appleIDToken = appleIDCredential.identityToken else {
+        print("Unable to fetch identity token")
+        return
+      }
+      guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+        print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+        return
+      }
+      
+      let credential = OAuthProvider.appleCredential(withIDToken: idTokenString,
+                                                     rawNonce: nonce,
+                                                     fullName: appleIDCredential.fullName)
+      
+      Auth.auth().signIn(with: credential) { [weak self] authResult, error in
+        guard let self = self else { return }
+        if let error = error {
+          print ("Error Apple sign in: %@", error)
+          self.authResultSubject.onNext(false)
+          return
+        }
+        self.authResultSubject.onNext(true)
+      }
+    }
+  }
