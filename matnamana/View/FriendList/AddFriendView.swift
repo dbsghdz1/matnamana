@@ -28,20 +28,20 @@ final class AddFriendView: BaseView {
     $0.setTitleColor(.black, for: .normal)
     $0.setTitle("친구", for: .normal)
     $0.layer.borderWidth = 1
+    
   }
   
   let familyButton = UIButton().then {
     $0.backgroundColor = .white
     $0.setTitleColor(.black, for: .normal)
     $0.setTitle("가족", for: .normal)
-    $0.layer.borderWidth = 1
+
   }
   
   let colleagueButton = UIButton().then {
     $0.setTitleColor(.black, for: .normal)
     $0.backgroundColor = .white
     $0.setTitle("동료", for: .normal)
-    $0.layer.borderWidth = 1
   }
   
   let sendButton = UIButton().then {
@@ -62,6 +62,9 @@ final class AddFriendView: BaseView {
     $0.spacing = 0
     $0.distribution = .fillEqually
     $0.layer.cornerRadius = 16
+    $0.layer.borderWidth = 1
+    $0.clipsToBounds = true
+    
   }
   
   override func configureUI() {

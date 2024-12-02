@@ -10,18 +10,24 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-final class CustomQuestionController: BaseViewController {
+final class CustomQuestionController: BaseViewController, UITextFieldDelegate {
   
   private var customQuestion = CustomQuestionView(frame: .zero)
   private let viewModel: CustomQuestionViewModel
   private var selectedIndexPath: IndexPath?
   private var presetTitle: String
   private var addMode: Bool
+  private var cellIndexPath: Int
   
-  init(viewModel: CustomQuestionViewModel, presetTitle: String, addMode: Bool) {
+  init(viewModel: CustomQuestionViewModel,
+       presetTitle: String,
+       addMode: Bool,
+       cellIndexPath: Int
+  ) {
     self.viewModel = viewModel
     self.presetTitle = presetTitle
     self.addMode = addMode
+    self.cellIndexPath = cellIndexPath
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -37,6 +43,8 @@ final class CustomQuestionController: BaseViewController {
   
   override func bind() {
     super.bind()
+    
+    var isTitleSet = false
     
     let input = CustomQuestionViewModel.Input(questions: Observable.just(()))
     let output = viewModel.transform(input: input)
@@ -56,7 +64,10 @@ final class CustomQuestionController: BaseViewController {
         if isEmptyQuestion {
           cell.questionLabel.textColor = .lightGray
         }
-        customQuestion.questionTitle.text = self.presetTitle
+        if !isTitleSet {
+          customQuestion.questionTitle.text = self.presetTitle
+          isTitleSet = true
+        }
       }
       .disposed(by: disposeBag)
     
@@ -96,28 +107,26 @@ final class CustomQuestionController: BaseViewController {
           let newPresetTitle = self.customQuestion.questionTitle.text ?? "새로운 질문"
           let presetQuestions = User.PresetQuestion(presetTitle: newPresetTitle, presetQuestion: self.viewModel.questions)
           
-          // 수정인지, 추가인지 구분하는 로직
           if let existingIndex = updatedQuestions.firstIndex(where: { $0.presetTitle == newPresetTitle }) {
-            // 질문이 이미 존재하면 수정
             updatedQuestions[existingIndex] = presetQuestions
             print("기존 질문 수정")
           } else {
-            // 질문이 존재하지 않으면 추가
-            updatedQuestions.append(presetQuestions)
-            print("새로운 질문 추가")
+            if self.addMode {
+              updatedQuestions.append(presetQuestions)
+            } else {
+              updatedQuestions[self.cellIndexPath] = presetQuestions
+            }
           }
           
-          // Firestore에 업데이트
           FirebaseManager.shared.updatePresetQuestions(for: id, presetQuestions: updatedQuestions) { success, error in
             if success {
               print("preset 질문 추가/수정 성공")
+              self.navigationController?.popViewController(animated: true)
             } else {
               print("preset 질문 추가/수정 실패")
             }
           }
         }
-        
-        self.navigationController?.popViewController(animated: true)
       })
       .disposed(by: disposeBag)
   }
@@ -127,4 +136,14 @@ final class CustomQuestionController: BaseViewController {
       cell.configureCell(questionCell: question)
     }
   }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    view.endEditing(true)
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    customQuestion.resignFirstResponder()
+    return true
+  }
 }
+

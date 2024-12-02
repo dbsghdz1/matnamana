@@ -27,20 +27,32 @@ final class LoginController: BaseViewController {
   override func bind() {
     super.bind()
     let input = LoginViewModel.Input(
-      loggedInApple: loginView.loginButton.rx.tap,
+      loggedInApple: loginView.loginButton.rx.controlEvent(.touchUpInside),
       loggedInKakao: loginView.kakaoLoginButton.rx.tap
     )
     
     let output = loginviewModel.transform(input: input)
     
     output.isDuplicate
-      .observe(on: MainScheduler.instance)
-      .subscribe(onNext: { isDuplicate in
+      .withLatestFrom(output.appleLoggin) { (isDuplicate: Bool, appleLoggin: Bool) -> (Bool, Bool) in
+        return (isDuplicate, appleLoggin)
+          }
+          .observe(on: MainScheduler.instance)
+      .subscribe(onNext: { [weak self] (isDuplicate, appleLoggin) in
+        guard let self = self else { return }
+        
         if isDuplicate {
           self.transitionToViewController(TabBarController())
         } else {
-          self.transitionToViewController(RequiredInformationController())
+          if appleLoggin {
+            let viewController = RequiredInformationController(appleLogin: true)
+            self.transitionToViewController(viewController)
+          } else {
+            let viewController = RequiredInformationController(appleLogin: false)
+            self.transitionToViewController(viewController)
+          }
         }
-      }).disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
   }
 }

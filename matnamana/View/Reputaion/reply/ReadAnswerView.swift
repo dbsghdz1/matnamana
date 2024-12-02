@@ -13,7 +13,7 @@ import SnapKit
 final class ReadAnswerView: BaseView {
   
   private let titleLabel = UILabel().then {
-    $0.text = "님은 이런 분입니다!"
+    $0.text = "님의 답변입니다!"
     $0.font = .boldSystemFont(ofSize: 28)
   }
   
@@ -25,7 +25,7 @@ final class ReadAnswerView: BaseView {
 
   
   func reName(name: String) {
-    titleLabel.text = "\(name)님은 이런 분입니다!"
+    titleLabel.text = "\(name)님의 답변입니다!"
   }
   
   override func configureUI() {

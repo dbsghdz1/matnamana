@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0AC29B2CA1753900E71D65 /* ForbiddenWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0AC29A2CA1753900E71D65 /* ForbiddenWords.swift */; };
 		4F1E88652C8E89CD00F09A36 /* AcceptRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E88642C8E89CD00F09A36 /* AcceptRequestController.swift */; };
 		4F1E88682C8E99B300F09A36 /* AcceptRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E88672C8E99B300F09A36 /* AcceptRequestViewModel.swift */; };
 		4F4877CD2C9C2A2E0060C1B7 /* QandACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4877CC2C9C2A2E0060C1B7 /* QandACell.swift */; };
 		4F4877CF2C9C2D6B0060C1B7 /* ReadAnswerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4877CE2C9C2D6B0060C1B7 /* ReadAnswerViewModel.swift */; };
+		4F4877D12C9D359E0060C1B7 /* ReputationReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4877D02C9D359E0060C1B7 /* ReputationReviewView.swift */; };
 		4F4EDB262C958B9E00BFF74F /* ReadAnserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4EDB252C958B9E00BFF74F /* ReadAnserController.swift */; };
 		4F4EDB282C958BA700BFF74F /* ReadAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4EDB272C958BA700BFF74F /* ReadAnswerView.swift */; };
 		4F4EDB2A2C997DAA00BFF74F /* AnswerListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4EDB292C997DAA00BFF74F /* AnswerListController.swift */; };
@@ -55,7 +57,7 @@
 		DA3A56062C85565B00459343 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A56052C85565B00459343 /* ProfileEditViewController.swift */; };
 		DA3A560A2C855BC400459343 /* ProfileUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A56092C855BC400459343 /* ProfileUIView.swift */; };
 		DA3A560C2C868BA700459343 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A560B2C868BA700459343 /* ProfileTableViewController.swift */; };
-		DA3A560E2C868BCC00459343 /* profileEditTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A560D2C868BCC00459343 /* profileEditTable.swift */; };
+		DA3A560E2C868BCC00459343 /* profileEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A560D2C868BCC00459343 /* profileEditCell.swift */; };
 		DA3A56102C881AF900459343 /* RxKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = DA3A560F2C881AF900459343 /* RxKeyboard */; };
 		DA3A56132C8A967C00459343 /* TTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A56122C8A967B00459343 /* TTest.swift */; };
 		DA59CFE02C93F0490052D050 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA59CFDF2C93F0490052D050 /* MyPageView.swift */; };
@@ -65,6 +67,8 @@
 		DA59CFE92C9BAE9F0052D050 /* MyPageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA59CFE82C9BAE9F0052D050 /* MyPageInfoView.swift */; };
 		DA59CFEB2C9BAED80052D050 /* MyPageInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA59CFEA2C9BAED80052D050 /* MyPageInfoController.swift */; };
 		DA59CFED2C9BAF630052D050 /* MypageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA59CFEC2C9BAF630052D050 /* MypageInfoCell.swift */; };
+		DAF0843D2CAB3E900039D2A3 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = DAF0843C2CAB3E900039D2A3 /* FirebaseMessaging */; };
+		DAF0843F2CAB72AE0039D2A3 /* FirebaseFcmManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF0843E2CAB72AE0039D2A3 /* FirebaseFcmManger.swift */; };
 		DD0CE9E42C92CD5D008B5A68 /* CustomQuestionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0CE9E32C92CD5D008B5A68 /* CustomQuestionController.swift */; };
 		DD0CE9E62C92D55E008B5A68 /* CustomQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0CE9E52C92D55E008B5A68 /* CustomQuestionView.swift */; };
 		DD0CE9E82C933091008B5A68 /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0CE9E72C933091008B5A68 /* BannerCell.swift */; };
@@ -154,11 +158,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F0AC29A2CA1753900E71D65 /* ForbiddenWords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForbiddenWords.swift; sourceTree = "<group>"; };
 		4F1E885F2C8BEE1700F09A36 /* ReputaionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputaionViewModel.swift; sourceTree = "<group>"; };
 		4F1E88642C8E89CD00F09A36 /* AcceptRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptRequestController.swift; sourceTree = "<group>"; };
 		4F1E88672C8E99B300F09A36 /* AcceptRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptRequestViewModel.swift; sourceTree = "<group>"; };
 		4F4877CC2C9C2A2E0060C1B7 /* QandACell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QandACell.swift; sourceTree = "<group>"; };
 		4F4877CE2C9C2D6B0060C1B7 /* ReadAnswerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAnswerViewModel.swift; sourceTree = "<group>"; };
+		4F4877D02C9D359E0060C1B7 /* ReputationReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReputationReviewView.swift; sourceTree = "<group>"; };
 		4F4EDB252C958B9E00BFF74F /* ReadAnserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAnserController.swift; sourceTree = "<group>"; };
 		4F4EDB272C958BA700BFF74F /* ReadAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAnswerView.swift; sourceTree = "<group>"; };
 		4F4EDB292C997DAA00BFF74F /* AnswerListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerListController.swift; sourceTree = "<group>"; };
@@ -199,7 +205,7 @@
 		DA3A56052C85565B00459343 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		DA3A56092C855BC400459343 /* ProfileUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIView.swift; sourceTree = "<group>"; };
 		DA3A560B2C868BA700459343 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
-		DA3A560D2C868BCC00459343 /* profileEditTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileEditTable.swift; sourceTree = "<group>"; };
+		DA3A560D2C868BCC00459343 /* profileEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileEditCell.swift; sourceTree = "<group>"; };
 		DA3A56122C8A967B00459343 /* TTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTest.swift; sourceTree = "<group>"; };
 		DA59CFDF2C93F0490052D050 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DA59CFE12C93F06F0052D050 /* myPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myPageController.swift; sourceTree = "<group>"; };
@@ -208,6 +214,7 @@
 		DA59CFE82C9BAE9F0052D050 /* MyPageInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfoView.swift; sourceTree = "<group>"; };
 		DA59CFEA2C9BAED80052D050 /* MyPageInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfoController.swift; sourceTree = "<group>"; };
 		DA59CFEC2C9BAF630052D050 /* MypageInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageInfoCell.swift; sourceTree = "<group>"; };
+		DAF0843E2CAB72AE0039D2A3 /* FirebaseFcmManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFcmManger.swift; sourceTree = "<group>"; };
 		DD0CE9E32C92CD5D008B5A68 /* CustomQuestionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuestionController.swift; sourceTree = "<group>"; };
 		DD0CE9E52C92D55E008B5A68 /* CustomQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomQuestionView.swift; sourceTree = "<group>"; };
 		DD0CE9E72C933091008B5A68 /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
@@ -278,6 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAF0843D2CAB3E900039D2A3 /* FirebaseMessaging in Frameworks */,
 				DA3A55FB2C802EA800459343 /* FirebaseStorageCombine-Community in Frameworks */,
 				DDCF924B2C785841005DB62F /* RxSwift in Frameworks */,
 				4F83D33F2C85A27D0076AE2A /* KakaoSDK in Frameworks */,
@@ -375,15 +383,16 @@
 			isa = PBXGroup;
 			children = (
 				4FDF00172C92704E000B7873 /* ReplyController.swift */,
-				4FDF00192C9270D8000B7873 /* AnswerController.swift */,
 				4FDF001B2C927270000B7873 /* ReplyView.swift */,
 				4FDF001D2C927B34000B7873 /* AnswerView.swift */,
+				4FDF00192C9270D8000B7873 /* AnswerController.swift */,
 				4F4EDB292C997DAA00BFF74F /* AnswerListController.swift */,
 				4F4EDB2B2C997DB700BFF74F /* AnswerListView.swift */,
 				4F4EDB2D2C9B9A9600BFF74F /* AnswerListCell.swift */,
 				4F4877CC2C9C2A2E0060C1B7 /* QandACell.swift */,
 				4F4EDB252C958B9E00BFF74F /* ReadAnserController.swift */,
 				4F4EDB272C958BA700BFF74F /* ReadAnswerView.swift */,
+				4F4877D02C9D359E0060C1B7 /* ReputationReviewView.swift */,
 			);
 			path = reply;
 			sourceTree = "<group>";
@@ -530,7 +539,7 @@
 				DDCF923B2C78552C005DB62F /* ProfileController.swift */,
 				DA3A56092C855BC400459343 /* ProfileUIView.swift */,
 				DA3A560B2C868BA700459343 /* ProfileTableViewController.swift */,
-				DA3A560D2C868BCC00459343 /* profileEditTable.swift */,
+				DA3A560D2C868BCC00459343 /* profileEditCell.swift */,
 				DA3A56052C85565B00459343 /* ProfileEditViewController.swift */,
 				DA3A55FE2C81C1EE00459343 /* ProfileEditView.swift */,
 				DA3A56122C8A967B00459343 /* TTest.swift */,
@@ -573,10 +582,10 @@
 		DDCF931C2C7D5418005DB62F /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				DDCF92412C78557D005DB62F /* LoginController.swift */,
 				4FEB36942C7EC9240066998E /* LoginView.swift */,
-				4F83D31A2C7F14830076AE2A /* RequiredInformationController.swift */,
+				DDCF92412C78557D005DB62F /* LoginController.swift */,
 				4F83D31C2C7F14A60076AE2A /* RequiredInformationView.swift */,
+				4F83D31A2C7F14830076AE2A /* RequiredInformationController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -585,6 +594,7 @@
 			isa = PBXGroup;
 			children = (
 				DDCF93202C7D8C6D005DB62F /* UserModel.swift */,
+				4F0AC29A2CA1753900E71D65 /* ForbiddenWords.swift */,
 				DDCF93222C7D8C8B005DB62F /* QuestionModel.swift */,
 				DDF2A01F2C80A072001B1DB7 /* AnswerModel.swift */,
 				DDF2A0212C80A084001B1DB7 /* ReputationModel.swift */,
@@ -598,6 +608,7 @@
 			children = (
 				DDCF93352C7EEE33005DB62F /* FirebaseManager.swift */,
 				DDF2A01D2C8034A1001B1DB7 /* UIExtensions.swift */,
+				DAF0843E2CAB72AE0039D2A3 /* FirebaseFcmManger.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -728,6 +739,7 @@
 				DA3A55F82C802EA800459343 /* FirebaseStorage */,
 				DA3A55FA2C802EA800459343 /* FirebaseStorageCombine-Community */,
 				DA3A560F2C881AF900459343 /* RxKeyboard */,
+				DAF0843C2CAB3E900039D2A3 /* FirebaseMessaging */,
 			);
 			productName = matnamana;
 			productReference = DDE043512C773E3500DA099A /* matnamana.app */;
@@ -870,6 +882,7 @@
 				DDCF932B2C7E0D3D005DB62F /* FriendListCell.swift in Sources */,
 				4F83D32C2C8554BA0076AE2A /* HomeView.swift in Sources */,
 				4F4EDB282C958BA700BFF74F /* ReadAnswerView.swift in Sources */,
+				4F0AC29B2CA1753900E71D65 /* ForbiddenWords.swift in Sources */,
 				DDF2A01E2C8034A1001B1DB7 /* UIExtensions.swift in Sources */,
 				4F83D3372C8576770076AE2A /* SectionModel.swift in Sources */,
 				4F63D7232C8A8D5F00B0F65C /* ReputationView.swift in Sources */,
@@ -919,6 +932,7 @@
 				DDCF923E2C78554B005DB62F /* TotalQuestionController.swift in Sources */,
 				DDCF923E2C78554B005DB62F /* TotalQuestionController.swift in Sources */,
 				4F4EDB262C958B9E00BFF74F /* ReadAnserController.swift in Sources */,
+				DAF0843F2CAB72AE0039D2A3 /* FirebaseFcmManger.swift in Sources */,
 				DA3A56132C8A967C00459343 /* TTest.swift in Sources */,
 				4FEB36982C7F07120066998E /* AppleLoginService.swift in Sources */,
 				DD9470FA2C899058009BF95E /* TotalQuestionView.swift in Sources */,
@@ -930,7 +944,7 @@
 				DA3A560C2C868BA700459343 /* ProfileTableViewController.swift in Sources */,
 				4F4EDB2A2C997DAA00BFF74F /* AnswerListController.swift in Sources */,
 				DD9470FE2C8A834D009BF95E /* ReferenceView.swift in Sources */,
-				DA3A560E2C868BCC00459343 /* profileEditTable.swift in Sources */,
+				DA3A560E2C868BCC00459343 /* profileEditCell.swift in Sources */,
 				DDCF92422C78557D005DB62F /* LoginController.swift in Sources */,
 				4F83D31D2C7F14A60076AE2A /* RequiredInformationView.swift in Sources */,
 				4F4877CF2C9C2D6B0060C1B7 /* ReadAnswerViewModel.swift in Sources */,
@@ -942,6 +956,7 @@
 				DA59CFEB2C9BAED80052D050 /* MyPageInfoController.swift in Sources */,
 				DD9470EE2C882F68009BF95E /* BaseViewController.swift in Sources */,
 				4F4877CD2C9C2A2E0060C1B7 /* QandACell.swift in Sources */,
+				4F4877D12C9D359E0060C1B7 /* ReputationReviewView.swift in Sources */,
 				DDCF93292C7E09ED005DB62F /* FriendListView.swift in Sources */,
 				DA3A560A2C855BC400459343 /* ProfileUIView.swift in Sources */,
 				DDE309162C9CCD0F003ED62D /* AddPresetCell.swift in Sources */,
@@ -1122,15 +1137,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = matnamana/matnamana.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = N7NLN3LS82;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = matnamana/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = MatnamanaLaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = MatnamanaLaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1140,9 +1156,15 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.revble.matnamana;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = matnamanaDevelopment;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1152,15 +1174,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = matnamana/matnamana.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = N7NLN3LS82;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = matnamana/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = MatnamanaLaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = MatnamanaLaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1170,9 +1194,15 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.revble.matnamana;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = matnamanaDevelopment;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1181,14 +1211,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = B6QMD2854G;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.matnamanaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1411,6 +1442,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DA3A56022C85464900459343 /* XCRemoteSwiftPackageReference "RxKeyboard" */;
 			productName = RxKeyboard;
+		};
+		DAF0843C2CAB3E900039D2A3 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseMessaging;
 		};
 		DDCF92452C785837005DB62F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

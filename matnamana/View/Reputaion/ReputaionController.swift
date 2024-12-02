@@ -36,7 +36,7 @@ final class ReputaionController: BaseViewController {
   override func setNavigation() {
     super.setNavigation()
     self.navigationItem.title = "평판 조회"
-    navigationItem.rightBarButtonItem = moveToSearchButton()
+//    navigationItem.rightBarButtonItem = moveToSearchButton()
   }
   
   override func bind() {
@@ -55,7 +55,7 @@ final class ReputaionController: BaseViewController {
       }).disposed(by: disposeBag)
     
     bindCollectionView()
-
+    
   }
   
   override func viewDidLoad() {
@@ -64,17 +64,17 @@ final class ReputaionController: BaseViewController {
     
   }
   
-  private func moveToSearchButton() -> UIBarButtonItem {
-    let button = reputationView.searchFriend
-    button.rx.tap
-      .observe(on: MainScheduler.instance)
-      .subscribe(onNext: { [weak self] in
-        guard let self else { return }
-        //self.pushViewController(SearchViewController())
-      }).disposed(by: disposeBag)
-    
-    return UIBarButtonItem(customView: button)
-  }
+//  private func moveToSearchButton() -> UIBarButtonItem {
+//    let button = reputationView.searchFriend
+//    button.rx.tap
+//      .observe(on: MainScheduler.instance)
+//      .subscribe(onNext: { [weak self] in
+//        guard let self else { return }
+//        self.pushViewController(SearchViewController())
+//      }).disposed(by: disposeBag)
+//    
+//    return UIBarButtonItem(customView: button)
+//  }
   
   private func bindCollectionView() {
     let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Item>>(
@@ -87,7 +87,8 @@ final class ReputaionController: BaseViewController {
               for: indexPath) as? DefaultCell else {
               return UICollectionViewCell()
             }
-            cell.configure(text: "친구에 대한 질문을 기다리고 있어요! \n친구를 도와주러 가볼까요?")
+            cell.configure(text: "친구를 도와주러 \n가볼까요?")
+            cell.label.font = .headLine()
 
             return cell
           } else {
@@ -115,7 +116,7 @@ final class ReputaionController: BaseViewController {
               for: indexPath) as? MyRequestsCell else {
               return UICollectionViewCell()
             }
-            cell.configure(imageUrl: item.profileImageUrl, name: item.userNickName, requester: item.requesterId, target: item.targetId)
+            cell.configure(imageUrl: item.profileImageUrl, name: item.userNickName, requester: item.requesterId, target: item.targetId, status: item.status)
             return cell
           }
           
@@ -134,7 +135,19 @@ final class ReputaionController: BaseViewController {
               for: indexPath) as? ReceivedRequestCell else {
               return UICollectionViewCell()
             }
-            cell.configure(imageUrl: item.profileImageUrl, name: item.userNickName, requester: item.requesterId, target: item.targetId)
+            cell.cancelButton.rx.tap
+              .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.viewModel.deleteReputation(requester: item.requesterId, target: item.targetId)
+              }).disposed(by: cell.disposeBag)
+            
+            cell.acceptButton.rx.tap
+              .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+                self.presentModally(UINavigationController(rootViewController: AcceptRequestController(viewModel: acceptViewModel, requester: item.requesterId, target: item.targetId)))
+              }).disposed(by: cell.disposeBag)
+            
+            cell.configure(imageUrl: item.profileImageUrl, name: item.userNickName, requester: item.requesterId, target: item.targetId, status: item.status)
             return cell
           }
         default:
@@ -179,20 +192,19 @@ final class ReputaionController: BaseViewController {
             let nickName = cell.nameLabel.text ?? ""
             let requesterId = cell.requesterId
             let targetId = cell.targetId
-            
-            pushViewController(AnswerListController(nickName: nickName, requester: requesterId, target: targetId))
+            if cell.statusLabel.text != "상대방 수락 대기중" {
+              pushViewController(AnswerListController(nickName: nickName, requester: requesterId, target: targetId))
+            }
           }
           
-          
+          if let cell = self.reputationView.collecitonView.cellForItem(at: indexPath) as? DefaultCell {
+            if let tabBarController = self.tabBarController {
+              tabBarController.selectedIndex = 1
+            }
+          }
           
         case Section.receivedRequests.rawValue:
           print("receivedRequests: \(indexPath.row)")
-          if let cell = self.reputationView.collecitonView.cellForItem(at: indexPath) as? ReceivedRequestCell {
-            let requesterId = cell.requesterId
-            let targetId = cell.targetId
-            
-            self.presentModally(UINavigationController(rootViewController: AcceptRequestController(viewModel: acceptViewModel, requester: requesterId, target: targetId)))
-          }
           
         default:
           break
@@ -208,19 +220,19 @@ final class ReputaionController: BaseViewController {
       .observe(on: MainScheduler.instance)
       .map { (friendData, myRequestedData, receivedData) -> [SectionModel<String, Item>] in
         let friendReputationItems = friendData.isEmpty 
-        ? [Item(userNickName: "", profileImageUrl: "", requesterId: "", targetId: "")]
+        ? [Item(userNickName: "", profileImageUrl: "", requesterId: "", targetId: "", status: "")]
         : friendData.map { (profileImage, userNickName, requesterId , targetId) in
-          Item(userNickName: userNickName, profileImageUrl: profileImage, requesterId: requesterId, targetId: targetId)
+          Item(userNickName: userNickName, profileImageUrl: profileImage, requesterId: requesterId, targetId: targetId, status: "")
         }
         let myRequestedItems = myRequestedData.isEmpty
-        ? [Item(userNickName: "", profileImageUrl: "", requesterId: "", targetId: "")]
-        : myRequestedData.map { (profileImage, userNickName, requesterId , targetId) in
-          Item(userNickName: userNickName, profileImageUrl: profileImage, requesterId: requesterId, targetId: targetId)
+        ? [Item(userNickName: "", profileImageUrl: "", requesterId: "", targetId: "", status: "")]
+        : myRequestedData.map { (profileImage, userNickName, requesterId , targetId, status) in
+          Item(userNickName: userNickName, profileImageUrl: profileImage, requesterId: requesterId, targetId: targetId, status: status)
         }
         let receivedRequestItems = receivedData.isEmpty
-        ? [Item(userNickName: "", profileImageUrl: "", requesterId: "", targetId: "")]
-        : receivedData.map { (profileImage, userNickName, requesterId , targetId) in
-          Item(userNickName: userNickName, profileImageUrl: profileImage, requesterId: requesterId, targetId: targetId)
+        ? [Item(userNickName: "", profileImageUrl: "", requesterId: "", targetId: "", status: "")]
+        : receivedData.map { (profileImage, userNickName, requesterId , targetId, status) in
+          Item(userNickName: userNickName, profileImageUrl: profileImage, requesterId: requesterId, targetId: targetId, status: status)
         }
 
         return [

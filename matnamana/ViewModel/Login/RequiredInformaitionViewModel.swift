@@ -15,25 +15,36 @@ final class RequiredInfoViewModel {
 
   private let disposeBag = DisposeBag()
   private let db = FirebaseManager.shared.db
-
+  
+  let isNicknameValid = PublishSubject<Bool>()
   let isNicknameDuplicate = PublishSubject<Bool>()
-
+  
+  func validateNickname(_ nickname: String) {
+    let allowedCharacters = CharacterSet.lowercaseLetters.union(.decimalDigits)
+    let characterSet = CharacterSet(charactersIn: nickname)
+    let containsForbiddenWord = ForbiddenWords.words.contains {
+      nickname.lowercased().contains($0)
+    }
+    let isValid = nickname.count <= 15 && allowedCharacters.isSuperset(of: characterSet) && !containsForbiddenWord
+    isNicknameValid.onNext(isValid)
+  }
 
   func checNicknameDuplicate(nickname: String) {
-    db.collection("users").whereField("info.nickName",
-                                      isEqualTo: nickname).getDocuments { [weak self] querySnapshot, error in
-      guard let self = self else { return }
-      if let error = error {
-        print("error")
+    db.collection("users")
+      .whereField("info.nickName",isEqualTo: nickname)
+      .getDocuments { [weak self] querySnapshot, error in
+        guard let self = self else { return }
+        if error != nil {
+          print("error")
+        }
+        if let querySnapshot = querySnapshot, !querySnapshot.documents.isEmpty {
+          print("중복된 닉네임")
+          self.isNicknameDuplicate.onNext(true)
+        } else {
+          print("중복되지 않음")
+          self.isNicknameDuplicate.onNext(false)
+        }
       }
-      if let querySnapshot = querySnapshot, !querySnapshot.documents.isEmpty {
-        print("중복된 닉네임")
-        self.isNicknameDuplicate.onNext(true)
-      } else {
-        print("중복되지 않음")
-        self.isNicknameDuplicate.onNext(false)
-      }
-    }
   }
 
   func saveLoginState(userId: String) {
@@ -55,7 +66,7 @@ final class RequiredInfoViewModel {
         name: name,
         phoneNumber: "",
         shortDescription: shortDescription,
-        profileImage: "",
+        profileImage: "https://firebasestorage.googleapis.com/v0/b/matnamana-65c65.appspot.com/o/profile%20(1).png?alt=media&token=bcda4a76-95ff-4281-a4e1-b32f26a75bff",
         nickName: nickName,
         birth: "",
         university: "",

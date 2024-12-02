@@ -32,6 +32,7 @@ final class AppleLoginService: NSObject, ASAuthorizationControllerDelegate, ASAu
     authorizationController.delegate = self
     authorizationController.presentationContextProvider = self
     authorizationController.performRequests()
+  
   }
   
   func authorizationController(controller: ASAuthorizationController,
@@ -60,7 +61,14 @@ final class AppleLoginService: NSObject, ASAuthorizationControllerDelegate, ASAu
           self.authResultSubject.onNext(false)
           return
         }
+        
         self.authResultSubject.onNext(true)
+        guard
+          let fullName = appleIDCredential.fullName,
+          let familiyName = fullName.familyName,
+          let givenName = fullName.givenName
+        else { return }
+        UserDefaults.standard.set("\(familiyName) \(givenName)", forKey: "userName")
       }
     }
   }

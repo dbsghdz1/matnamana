@@ -78,7 +78,7 @@ final class KakaoLoginService {
   func getUserInfo() {
     UserApi.shared.me() {(user, error) in
       guard let user = user else { return }
-      guard let kakaoAccount = user.kakaoAccount else { return }
+//      guard let kakaoAccount = user.kakaoAccount else { return }
       if let error = error {
         print(error)
       }

@@ -14,11 +14,11 @@ final class DefaultCell: UICollectionViewCell {
   ///String(describing: )
   static let id = "DefaultCell"
   
-  private let label = UILabel().then {
+  let label = UILabel().then {
     $0.text = "이지은 -> 박동현"
     $0.textAlignment = .center
     $0.font = .boldSystemFont(ofSize: 22)
-    $0.numberOfLines = 0
+    $0.numberOfLines = 2
   }
   
   override init(frame: CGRect) {

@@ -114,12 +114,14 @@ final class QuestionCell: UICollectionViewCell {
   private func setConstraints() {
     
     totalQuestionButton.snp.makeConstraints {
-      $0.top.horizontalEdges.equalToSuperview().inset(20)
+      $0.top.equalTo(labelStackView.snp.bottom).offset(10)
+      $0.horizontalEdges.equalToSuperview().inset(20)
       $0.height.equalTo(56)
+      $0.bottom.equalToSuperview()
     }
     
     buttonStackView.snp.makeConstraints {
-      $0.top.equalTo(totalQuestionButton.snp.bottom).offset(10)
+      $0.top.horizontalEdges.equalToSuperview().inset(20)
       $0.horizontalEdges.equalToSuperview().inset(20)
       $0.height.equalTo(110)
     }
@@ -127,7 +129,7 @@ final class QuestionCell: UICollectionViewCell {
     labelStackView.snp.makeConstraints {
       $0.top.equalTo(buttonStackView.snp.bottom).offset(10)
       $0.horizontalEdges.equalToSuperview().inset(20)
-      $0.bottom.equalToSuperview()
+      
     }
   }
 }

@@ -135,11 +135,11 @@ final class FriendListViewModel: ViewModelType {
       }
       .flatMapLatest { [weak self] _ -> Observable<[User.Friend]> in
         guard let self = self else { return .just([]) }
-        return self.fetchFriendList() // 변경된 친구 리스트를 다시 불러옴
+        return self.fetchFriendList()
       }
       .subscribe(onNext: { [weak self] updatedFriends in
         guard let self = self else { return }
-        self.friends.accept(updatedFriends) // 업데이트된 친구 리스트 반영
+        self.friends.accept(updatedFriends)
       })
       .disposed(by: disposeBag)
     

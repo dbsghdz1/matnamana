@@ -25,12 +25,14 @@ struct Item {
   let profileImageUrl: String
   let requesterId: String
   let targetId: String
+  let status: String
   
-  init(userNickName: String, profileImageUrl: String, requesterId: String, targetId: String) {
+  init(userNickName: String, profileImageUrl: String, requesterId: String, targetId: String, status: String) {
     self.userNickName = userNickName
     self.profileImageUrl = profileImageUrl
     self.requesterId = requesterId
     self.targetId = targetId
+    self.status = status
   }
 }
 

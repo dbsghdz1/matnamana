@@ -9,9 +9,8 @@ final class ProfileEditViewModel: ViewModelType {
   
   struct Input {
     let saveTap: Observable<Void>
-    let nameText: Observable<String>
-    let nicknameText: Observable<String>
-    let shortDescriptionText: Observable<String>
+//    let nicknameText: Observable<String>
+//    let shortDescriptionText: Observable<String>
     let userInfoTexts: Observable<[String: String]>
     let profileImageUrl: Observable<String>  // 이미지 URL을 받을 Observable 추가
   }
@@ -46,10 +45,10 @@ final class ProfileEditViewModel: ViewModelType {
   // 입력을 받아 사용자 정보 저장 및 업데이트하는 메서드
   func transform(input: Input) -> Output {
     let saveResult = input.saveTap
-      .withLatestFrom(Observable.combineLatest(input.nameText, input.nicknameText, input.shortDescriptionText, input.userInfoTexts, input.profileImageUrl))  // 이미지 URL 포함
-      .flatMap { [weak self] (name, nickName, shortDescription, userInfo, profileImageUrl) -> Observable<Bool> in
+      .withLatestFrom(Observable.combineLatest( input.userInfoTexts, input.profileImageUrl))  // 이미지 URL 포함
+      .flatMap { [weak self] ( userInfo, profileImageUrl) -> Observable<Bool> in
         guard let self = self else { return Observable.just(false) }
-        
+        guard let name = UserDefaults.standard.string(forKey: "userName") else { return Observable.just(false) }
         // 기존 데이터를 가져와 업데이트
         return self.fetchProfileData().flatMap { existingUser -> Observable<Bool> in
           let info = User.Info(
@@ -59,9 +58,9 @@ final class ProfileEditViewModel: ViewModelType {
             location: userInfo["거주지"] ?? existingUser.info.location,
             name: name,
             phoneNumber: userInfo["휴대번호"] ?? existingUser.info.phoneNumber,
-            shortDescription: shortDescription,
+            shortDescription:userInfo["소개"] ?? existingUser.info.shortDescription,
             profileImage: profileImageUrl,
-            nickName: nickName,
+            nickName: userInfo["닉네임"] ?? existingUser.info.nickName,
             birth: userInfo["생일"] ?? existingUser.info.birth,
             university: userInfo["대학교"] ?? existingUser.info.university,
             companyName: userInfo["회사"] ?? existingUser.info.companyName

@@ -6,6 +6,7 @@
 //
 import UIKit
 
+import RxSwift
 import Kingfisher
 import SnapKit
 import Then
@@ -14,12 +15,14 @@ final class ReceivedRequestCell: UICollectionViewCell {
   ///String(describing: )
   static let id = "ReceivedRequestViewCell"
   
+  var disposeBag = DisposeBag()
+  
   var requesterId = ""
   var targetId = ""
   
   
   private let imageView = UIImageView().then {
-    $0.image = UIImage()
+    $0.image = UIImage(named: "profile")
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
     $0.layer.cornerRadius = 40
@@ -37,16 +40,23 @@ final class ReceivedRequestCell: UICollectionViewCell {
     $0.font = .systemFont(ofSize: 16)
   }
   
-  private let acceptButton = UIButton().then {
+  let acceptButton = UIButton().then {
     $0.setTitle("수락하기", for: .normal)
+    $0.titleLabel?.font = UIFont.subHeadLine()
+    $0.backgroundColor = .manaMainColor
+    $0.layer.cornerRadius = 16
   }
-  private let cancelButton = UIButton().then {
+  let cancelButton = UIButton().then {
     $0.setTitle("무시하기", for: .normal)
+    $0.titleLabel?.font = UIFont.subHeadLine()
+    $0.backgroundColor = .lightGray
+    $0.layer.cornerRadius = 16
   }
   
   private let buttonStackView = UIStackView().then {
     $0.axis = .horizontal
     $0.spacing = 10
+    $0.distribution = .fillEqually
   }
   
   override init(frame: CGRect) {
@@ -56,6 +66,12 @@ final class ReceivedRequestCell: UICollectionViewCell {
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    // 재사용될 때 disposeBag 초기화
+    disposeBag = DisposeBag()
   }
   
   private func configureUI() {
@@ -85,21 +101,32 @@ final class ReceivedRequestCell: UICollectionViewCell {
     
     statusLabel.snp.makeConstraints {
       $0.centerY.equalTo(imageView.snp.centerY)
-      $0.left.equalTo(imageView.snp.right).offset(20)
+      $0.right.equalToSuperview().offset(-40)
     }
     
     buttonStackView.snp.makeConstraints {
-      $0.top.equalTo(statusLabel.snp.bottom).offset(2)
+      $0.top.equalTo(statusLabel.snp.bottom).offset(10)
       $0.centerX.equalTo(statusLabel.snp.centerX)
+      $0.leading.trailing.equalTo(statusLabel)
     }
   }
   
-  func configure(imageUrl: String, name: String, requester: String, target: String) {
+  func configure(imageUrl: String, name: String, requester: String, target: String, status: String) {
     if let url = URL(string: imageUrl) {
       imageView.kf.setImage(with: url)
     }
-    nameLabel.text = "\(name)"
+    nameLabel.text = "\(name) -> 나"
     requesterId = requester
     targetId = target
+    
+    if status == "approved" {
+      statusLabel.text = "맞나만나가 진행중입니다."
+      cancelButton.isHidden = true
+      acceptButton.isHidden = true
+    } else {
+      statusLabel.text = "맞나만나를 요청받았습니다."
+      cancelButton.isHidden = false
+      acceptButton.isHidden = false
+    }
   }
 }

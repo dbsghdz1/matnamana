@@ -19,7 +19,7 @@ final class FriendListView: BaseView {
   let addFriend = UIButton(type: .system).then {
     let image = UIImage(systemName: "person.badge.plus")
     $0.setImage(image, for: .normal)
-    $0.imageView?.contentMode = .scaleAspectFit
+    $0.imageView?.contentMode = .scaleAspectFill
     $0.setTitle("", for: .normal)
   }
   

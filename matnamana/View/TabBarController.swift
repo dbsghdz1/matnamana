@@ -8,7 +8,7 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     viewConfig()
@@ -19,42 +19,43 @@ final class TabBarController: UITabBarController {
       } else if let user = user {
         let myNickName = user.info.nickName
         let myName = user.info.name
+        let image = user.info.profileImage
         UserDefaults.standard.setValue(myNickName, forKey: "userNickName")
         UserDefaults.standard.setValue(myName, forKey: "userName")
-        UserDefaults.standard.setValue("profile", forKey: "userImage")
+        UserDefaults.standard.setValue(image, forKey: "userImage")
         self.navigationItem.largeTitleDisplayMode = .always
       }
     }
   }
   
   private func viewConfig() {
-      let viewControllers = TabbarItem.allCases.map { item -> UINavigationController in
-          let vc = item.viewController
-          vc.view.backgroundColor = .systemBackground
-          vc.navigationItem.title = item.navigtaionItemTitle
-          vc.navigationItem.largeTitleDisplayMode = .always
-
-          let nav = UINavigationController(rootViewController: vc)
-          nav.title = item.navigtaionItemTitle
-          nav.tabBarItem.image = UIImage(systemName: item.tabbarImageName)
-
-          // Large Title 설정
-          nav.navigationBar.prefersLargeTitles = true
-
-          return nav
-      }
-      setViewControllers(viewControllers, animated: false)
+    let viewControllers = TabbarItem.allCases.map { item -> UINavigationController in
+      let vc = item.viewController
+      vc.view.backgroundColor = .systemBackground
+      vc.navigationItem.title = item.navigtaionItemTitle
+      vc.navigationItem.largeTitleDisplayMode = .always
+      
+      
+      let nav = UINavigationController(rootViewController: vc)
+      nav.title = item.navigtaionItemTitle
+      nav.tabBarItem.image = item.tabbarImage
+      nav.navigationBar.prefersLargeTitles = true
+      
+      return nav
+    }
+    setViewControllers(viewControllers, animated: false)
+    tabBar.tintColor = UIColor.manaMainColor
   }
-
+  
 }
 extension TabBarController {
-  
+
   enum TabbarItem: CaseIterable {
     case mainPage
     case friendList
     case reputation
     case myPage
-
+    
     var viewController: UIViewController {
       switch self {
       case .mainPage:
@@ -69,16 +70,16 @@ extension TabBarController {
       }
     }
     
-    var tabbarImageName: String {
+    var tabbarImage: UIImage? {
       switch self {
       case .mainPage:
-        return "house.fill"
+        return UIImage(systemName: "house.fill")  // SF Symbols 사용
       case .friendList:
-        return "person.2.fill"
+        return UIImage(systemName: "person.2.fill")
       case .reputation:
-        return "list.bullet.rectangle.portrait.fill"
+        return UIImage(named: "tapbbar")  // matnamanaLogo 이미지 사용
       case .myPage:
-        return "person.fill"
+        return UIImage(systemName: "person.fill")
       }
     }
     

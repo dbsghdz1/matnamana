@@ -10,7 +10,7 @@ import RxCocoa
 import RxDataSources
 import RxSwift
 
-class FriendListController: BaseViewController {
+class FriendListController: BaseViewController, UISearchBarDelegate {
   
   private let viewModel = FriendListViewModel()
   var friendListView = FriendListView(frame: .zero)
@@ -24,6 +24,19 @@ class FriendListController: BaseViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewModel.fetchFriends()
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+    tapGesture.cancelsTouchesInView = false
+    self.view.addGestureRecognizer(tapGesture)
+    
+  }
+  
+  @objc override func dismissKeyboard() {
+    self.view.endEditing(true)
   }
   
   override func bind() {
@@ -42,10 +55,11 @@ class FriendListController: BaseViewController {
     let output = viewModel.transform(input: input)
     
     let dataSource = RxTableViewSectionedReloadDataSource<FriendsSection>(
-      configureCell: { dataSource, tableView, indexPath, friend in
+      configureCell: { [weak self] dataSource, tableView, indexPath, friend in
+        guard let self else { return UITableViewCell() }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: FriendListCell.self), for: indexPath) as? FriendListCell else { return UITableViewCell() }
         let friend = dataSource[indexPath]
-        cell.configureCell(nickName: friend.friendId,
+        cell.configureCell(nickName: friend.name,
                            relation: friend.type.rawValue,
                            friendImage: friend.friendImage)
         
@@ -79,7 +93,9 @@ class FriendListController: BaseViewController {
               guard let self = self else { return .empty() }
               
               return Observable<Bool>.create { observer in
-                let alert = UIAlertController(title: "친구 요청 거절", message: "정말로 친구 요청을 거절하시겠습니까?", preferredStyle: .alert)
+                let alert = UIAlertController(title: "친구 요청 거절",
+                                              message: "정말로 친구 요청을 거절하시겠습니까?",
+                                              preferredStyle: .alert)
                 
                 let confirmAction = UIAlertAction(title: "확인", style: .destructive) { _ in
                   observer.onNext(true)
@@ -125,7 +141,7 @@ class FriendListController: BaseViewController {
         if userExists {
           FirebaseManager.shared.getUserInfo(nickName: userNickName) { user, error in
             if let user = user {
-              let profileVC = ProfileViewController(userInfo: user.info.nickName)
+              let profileVC = ProfileViewController(userInfo: user.info.nickName, isCellClicked: false, sendId: nil)
               profileVC.userInfo = user.info.nickName
               self.navigationController?.pushViewController(profileVC, animated: true)
             }
@@ -143,5 +159,28 @@ class FriendListController: BaseViewController {
         self.present(alert, animated: true)
       })
       .disposed(by: disposeBag)
+    
+    bindFriendsSelect()
+  }
+  
+  func bindFriendsSelect() {
+    friendListView.friendList.rx.itemSelected
+      .subscribe(onNext: { [weak self] indexPath in
+        guard let self else { return }
+        
+        guard let cell = self.friendListView.friendList.cellForRow(at: indexPath) as? FriendListCell else {
+          return
+        }
+        print(cell.userName.text ?? "")
+        let profileVC = ProfileViewController(userInfo: cell.userName.text ?? "",
+                                              isCellClicked: true,
+                                              sendId: cell.userName.text)
+        profileVC.userInfo = cell.userName.text ?? ""
+        self.navigationController?.pushViewController(profileVC, animated: true)
+      }).disposed(by: disposeBag)
+  }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    searchBar.resignFirstResponder()
   }
 }

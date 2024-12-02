@@ -105,7 +105,7 @@ final class MainQuestionViewController: BaseViewController {
       .disposed(by: cell.disposeBag)
   }
   
-  func bindCell(cell: CustomQuestionCell) {
+  func bindCell(cell: CustomQuestionCell, indexPath: Int) {
     
     cell.disposeBag = DisposeBag()
     
@@ -130,9 +130,11 @@ final class MainQuestionViewController: BaseViewController {
     
     cell.buttonTap
       .subscribe(onNext: { [weak self] in
-        guard let self = self, let selectedQuestion = cell.selectedQuestion else { return }
+        guard let self, let selectedQuestion = cell.selectedQuestion else { return }
         let viewModel = CustomQuestionViewModel(presetQuestions: selectedQuestion.presetQuestion)
-        let vc = CustomQuestionController(viewModel: viewModel, presetTitle: selectedQuestion.presetTitle, addMode: false)
+        let vc = CustomQuestionController(viewModel: viewModel,
+                                          presetTitle: selectedQuestion.presetTitle,
+                                          addMode: false, cellIndexPath: indexPath)
         self.navigationController?.pushViewController(vc, animated: true)
       })
       .disposed(by: cell.disposeBag)
@@ -190,7 +192,8 @@ extension MainQuestionViewController: UICollectionViewDataSource, UICollectionVi
       let selectedQuestion = presetQuestions[indexPath.row]
       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: CustomQuestionCell.self), for: indexPath) as? CustomQuestionCell else { return UICollectionViewCell() }
       cell.configure(title: presetTitles[indexPath.row], question: selectedQuestion)
-      bindCell(cell: cell)
+      print(indexPath.row)
+      bindCell(cell: cell, indexPath: indexPath.row)
       return cell
     case 3:
       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AddNewQuestionCell.self), for: indexPath) as? AddNewQuestionCell else { return UICollectionViewCell() }

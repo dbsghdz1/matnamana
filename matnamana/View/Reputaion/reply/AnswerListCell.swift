@@ -46,7 +46,7 @@ final class AnswerListCell: UITableViewCell {
   
   private func setConstraints() {
     userImage.snp.makeConstraints {
-      $0.leading.equalToSuperview().inset(20)
+      $0.leading.equalToSuperview()
       $0.centerY.equalToSuperview()
       $0.width.height.equalTo(50)
     }

@@ -99,7 +99,7 @@ final class MyPageInfoController: BaseViewController {
         observer.onCompleted()
       }
       
-      let deleteUserIdAction = UIAlertAction(title: "탈되하기", style: .destructive) { _ in
+      let deleteUserIdAction = UIAlertAction(title: "탈퇴하기", style: .destructive) { _ in
         observer.onNext(.ok)
         observer.onCompleted()
       }
@@ -140,6 +140,9 @@ final class MyPageInfoController: BaseViewController {
         print("회원 탈퇴 중 오류 발생: \(error.localizedDescription)")
       } else {
         print("회원 탈퇴가 완료되었습니다.")
+
+        UserDefaults.standard.set(false, forKey: "isLoggedIn")
+
         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = scene.windows.first {
           window.rootViewController = UINavigationController(rootViewController: LoginController())

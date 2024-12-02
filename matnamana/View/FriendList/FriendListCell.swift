@@ -16,15 +16,17 @@ final class FriendListCell: UITableViewCell {
   private let userImage = UIImageView().then {
     $0.clipsToBounds = true
     $0.layer.cornerRadius = 25
-    $0.contentMode = .scaleAspectFit
+    $0.contentMode = .scaleAspectFill
   }
   
   let userName = UILabel().then {
     $0.text = ""
+    $0.font = .systemFont(ofSize: 17, weight: .semibold)
   }
   
   let userRelation = UILabel().then {
     $0.text = "친구"
+    $0.font = .systemFont(ofSize: 17)
   }
   
   private let stackView = UIStackView().then {
@@ -70,6 +72,11 @@ final class FriendListCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func prepareForReuse() {
+    userImage.image = UIImage(named: "profile")
+    super.prepareForReuse()
+  }
+  
   private func setConstraints() {
     userImage.snp.makeConstraints {
       $0.leading.equalToSuperview().inset(20)
@@ -103,7 +110,7 @@ final class FriendListCell: UITableViewCell {
     userName.text = nickName
     
     if let url = URL(string: friendImage) {
-      userImage.kf.setImage(with: url)
+      userImage.kf.setImage(with: url, placeholder: UIImage(named: "profile"))
     }
     
     switch relation.lowercased() {

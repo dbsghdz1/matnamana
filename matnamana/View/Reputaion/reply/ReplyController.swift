@@ -32,6 +32,7 @@ final class ReplyController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel.fetchQuestionList(nickName: name)
+    self.navigationItem.title = "답변작성"
   }
   
   override func bind() {

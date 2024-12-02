@@ -17,7 +17,15 @@ final class BannerCell: UICollectionViewCell {
     $0.clipsToBounds = true
     $0.image = UIImage(named: "fill")
     $0.layer.cornerRadius = 16
+
   }
+  private let label = UILabel().then {
+    $0.text = "사람과 사람 사이 긍정적인 영향을 끼칩니다."
+    $0.textColor = .white
+    $0.font =  UIFont(name: "SFPro-Bold", size: 16)
+    $0.textAlignment = .center
+  }
+  
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -31,10 +39,13 @@ final class BannerCell: UICollectionViewCell {
   
   private func configureUI() {
     contentView.addSubview(bannerImageView)
+    bannerImageView.addSubview(label)
   }
   
   private func setConstraints() {
-    
+    label.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
     bannerImageView.snp.makeConstraints {
       $0.horizontalEdges.equalToSuperview().inset(20)
       $0.height.equalTo(120)

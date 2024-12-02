@@ -12,8 +12,9 @@ import RxSwift
 import SnapKit
 
 final class myPageController: BaseViewController {
-  let myPageTable = ["나의 히스토리", "공지", "자주 묻는 질문", "맞나만나에 문의하기", "맞나만나 정보"]
-  
+  let myPageTable = [//"나의 히스토리",
+    "공지", "자주 묻는 질문", "맞나만나에 문의하기", "맞나만나 정보"]
+
   var myPageView = MyPageView(frame: .zero)
   
   override func setupView() {
@@ -85,16 +86,16 @@ extension myPageController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     switch indexPath.row {
-    case 1:
+    case 0:
       if let url = URL(string: "https://matnamana.com/notice/") {  UIApplication.shared.open(url, options: [:])
       }
-    case 2:
+    case 1:
       if let url = URL(string: "https://matnamana.com/faq/") {  UIApplication.shared.open(url, options: [:])
       }
-    case 3:
+    case 2:
       if let url = URL(string: "https://matnamana.com/contact/") {  UIApplication.shared.open(url, options: [:])
       }
-    case 4:
+    case 3:
       let myPageInfoController = MyPageInfoController()
       self.navigationController?.pushViewController(myPageInfoController, animated: true)
     default:

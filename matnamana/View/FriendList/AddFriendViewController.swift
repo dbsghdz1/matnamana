@@ -19,11 +19,16 @@ final class AddFriendViewController: BaseViewController {
   var userInfo: String
   var userImage: String
   var userName: String
+  var completion: (() -> Void)?
   
-  init(userInfo: String, userImage: String, userName: String) {
+  init(userInfo: String,
+       userImage: String,
+       userName: String,
+       completion: @escaping (() -> Void)) {
     self.userInfo = userInfo
     self.userImage = userImage
     self.userName = userName
+    self.completion = completion
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -109,7 +114,11 @@ final class AddFriendViewController: BaseViewController {
             } else {
               print("실패")
             }
-            self.dismiss(animated: true)
+            guard let completion = completion else { return }
+            self.dismiss(animated: true) {
+              print(self)
+              self.completion?()
+            }
           }).disposed(by: self.disposeBag)
       }).disposed(by: disposeBag)
   }

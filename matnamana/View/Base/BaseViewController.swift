@@ -23,7 +23,7 @@ class BaseViewController: UIViewController {
     bind()
     setNavigation()
     setupKeyboardHandling()
-    
+//    setupDismissKeyboardGesture()
     overrideUserInterfaceStyle = .light
     view.backgroundColor = .systemBackground
   }
@@ -40,7 +40,7 @@ class BaseViewController: UIViewController {
   func setupView() {
     
   }
-  
+
   private func setupKeyboardHandling() {
     RxKeyboard.instance.visibleHeight
       .drive(onNext: { [weak self] keyboardHeight in
@@ -49,7 +49,9 @@ class BaseViewController: UIViewController {
       })
       .disposed(by: disposeBag)
   }
+  
   func adjustForKeyboardHeight(_ keyboardHeight: CGFloat) {
+
     // 전체 뷰의 subviews 중 UIScrollView 타입의 뷰에 대해 인셋 조정
     UIView.animate(withDuration: 0.3) {
       let inset = keyboardHeight > 0 ? keyboardHeight : 0
@@ -67,7 +69,7 @@ class BaseViewController: UIViewController {
       }
     }
   }
-  
+
   func setupDismissKeyboardGesture() {
     let tapGesture = UITapGestureRecognizer()
     self.view.addGestureRecognizer(tapGesture)

@@ -25,7 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     } else {
       window.rootViewController = LoginController()
     }
-    
+//    window.rootViewController = RequiredInformationController(appleLogin: false)
+
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
       window.makeKeyAndVisible()
     }

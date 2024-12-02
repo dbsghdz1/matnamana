@@ -6,25 +6,15 @@
 //
 
 struct Question: Codable {
-  //  let questionId: String
   let contents: [Content]
 }
 
 extension Question {
   struct Content: Codable {
-    //    let contentType: QuestionType
     let contentType: String
     let contentDescription: String
   }
 }
-
-//extension Question.Content {
-//  enum QuestionType: String, Codable {
-//    case fact
-//    case career
-//    case values
-//  }
-//}
 
 enum QuestionType: String {
   case couple = "연애 질문"

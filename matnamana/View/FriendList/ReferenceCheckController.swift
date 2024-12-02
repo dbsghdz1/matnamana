@@ -57,44 +57,44 @@ final class ReferenceCheckController: BaseViewController {
     super.bind()
     
     referenceView.sendButton.rx.tap
-      .subscribe({ [weak self] _ in
+      .subscribe(onNext: { [weak self] _ in
         guard let self else { return }
-        let alert = UIAlertController(title: "평판조회가 신청되었습니다.", message: nil, preferredStyle: .alert)
+        
+        let alert = UIAlertController(title: "맞나만나 요청을 하시겠습니까?",
+                                      message: "질문 항목은 상대방 친구에게만 노출됩니다.",
+                                      preferredStyle: .alert)
+        
+
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-          self.navigationController?.popToRootViewController(animated: true)
-        }))
-        self.present(alert, animated: true)
-    
-        guard let requestId = UserDefaults.standard.string(forKey: "loggedInUserId") else { return }
-        guard let userNickName = UserDefaults.standard.string(forKey: "userNickName") else { return }
-        guard let userImage = UserDefaults.standard.string(forKey: "userImage") else { return }
-        FirebaseManager.shared.getUserInfo(nickName: targetID) { [weak self] snapShot, error in
-          guard let snapShot = snapShot else { return }
-          guard let self else { return }
-          
-//          for question in self.questions {
-//              let newQuestion = QuestionList(answer: ["a": "b"], contentDescription: question)
-//              mannamQuestion.append(newQuestion)
-//          }
-          let newQuestion = questions.map {
-            QuestionList(answer: nil, contentDescription: $0)
+          guard let requestId = UserDefaults.standard.string(forKey: "loggedInUserId") else { return }
+          guard let userName = UserDefaults.standard.string(forKey: "userName") else { return }
+          guard let userImage = UserDefaults.standard.string(forKey: "userImage") else { return }
+
+          FirebaseManager.shared.getUserInfo(nickName: self.targetID) { [weak self] snapShot, error in
+            guard let self = self, let snapShot = snapShot else { return }
+            let newQuestion = self.questions.map {
+              QuestionList(answer: nil, contentDescription: $0)
+            }
+            self.request = ReputationRequest(
+              requester: UserProfile(nickName: userName, profileImage: userImage, userId: requestId),
+              target: UserProfile(nickName: snapShot.info.name, profileImage: userImage, userId: snapShot.userId),
+              questionList: newQuestion,
+              status: .pending,
+              selectedFriends: [UserProfile(nickName: "", profileImage: "", userId: "")],
+              selectedFriendsUserIds: [""]
+            )
+            print(self.request)
+            FirebaseManager.shared.addData(to: .reputationRequest,
+                                           data: self.request, // 수정: self.request로 변경
+                                           documentId: requestId + "-" + snapShot.userId
+            )
+            self.navigationController?.popToRootViewController(animated: true)
           }
-          self.request = ReputationRequest(
-            requester: UserProfile(nickName: userNickName, profileImage: userImage, userId: requestId),
-            target: UserProfile(nickName: snapShot.info.nickName, profileImage: "targetImage", userId: snapShot.userId),
-            questionList: newQuestion,
-            status: .pending,
-            selectedFriends: [UserProfile(nickName: userNickName, profileImage: userImage, userId: requestId)],
-            selectedFriendsUserIds: [requestId]
-          )
-          print(self.request)
-          FirebaseManager.shared.addData(to: .reputationRequest,
-                                         data: request,
-                                         documentId: requestId + "-" + snapShot.userId
-          )
-        }
-      }).disposed(by: disposeBag)
-  }
+        }))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+      })
+    .disposed(by: disposeBag)  }
 }
 
 extension ReferenceCheckController: UITableViewDelegate, UITableViewDataSource {

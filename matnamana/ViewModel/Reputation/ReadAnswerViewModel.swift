@@ -33,7 +33,8 @@ final class ReadAnswerViewModel {
   }
   
   func readFriendId(nickName: String, completion: @escaping (String, Error?) -> Void) {
-    db.collection("users").whereField("info.nickName", isEqualTo: nickName )
+    
+    db.collection("users").whereField("info.name", isEqualTo: nickName )
       .getDocuments { querySnapshot, error in
         if let error = error {
           completion("", error)

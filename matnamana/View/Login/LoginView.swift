@@ -1,11 +1,13 @@
+////
+////  LoginView.swift
+////  matnamana
+////
+////  Created by pc on 8/28/24.
+////
 //
-//  LoginView.swift
-//  matnamana
-//
-//  Created by pc on 8/28/24.
-//
-
+import AuthenticationServices
 import UIKit
+
 
 import SnapKit
 import Then
@@ -38,11 +40,7 @@ final class LoginView: BaseView {
     $0.font = UIFont.systemFont(ofSize: 15)
   }
   
-  let loginButton = UIButton().then {
-    $0.setImage(UIImage(named: "appleLogin"), for: .normal)
-    $0.setTitleColor(.white, for: .normal)
-    $0.layer.cornerRadius = 10
-  }
+  let loginButton = ASAuthorizationAppleIDButton()
   
   let kakaoLoginButton = UIButton().then {
     $0.setImage(UIImage(named: "kakaoLogin"), for: .normal)
@@ -65,9 +63,10 @@ final class LoginView: BaseView {
   
   override func setConstraints() {
     logo.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(50)
       $0.centerX.equalToSuperview()
-      $0.width.height.equalTo(300)
+      $0.height.equalTo(logo.snp.width)
+      $0.top.equalToSuperview().offset(50)
+      $0.leading.trailing.equalToSuperview().inset(50)
     }
     
     goodMeeting.snp.makeConstraints {
@@ -91,19 +90,27 @@ final class LoginView: BaseView {
     }
     
     loginButton.snp.makeConstraints {
-      $0.bottom.equalToSuperview().inset(150)
+      $0.top.equalTo(matnamana.snp.bottom).offset(16)
       $0.centerX.equalToSuperview()
-      $0.left.equalToSuperview().offset(16)
-      $0.right.equalToSuperview().offset(-16)
-      $0.height.equalTo(56)
+      $0.leading.trailing.equalToSuperview().inset(16)
+      $0.height.equalTo(kakaoLoginButton.snp.height)
+//      $0.bottom.equalToSuperview().inset(150)
+//      $0.centerX.equalToSuperview()
+//      $0.left.equalToSuperview().offset(16)
+//      $0.right.equalToSuperview().offset(-16)
+//      $0.height.equalTo(56)
     }
     
     kakaoLoginButton.snp.makeConstraints {
-      $0.bottom.equalTo(loginButton.snp.top).offset(-20)
+//      $0.bottom.equalTo(loginButton.snp.top).offset(-20)
+//      $0.centerX.equalToSuperview()
+//      $0.left.equalToSuperview().offset(16)
+//      $0.right.equalToSuperview().offset(-16)
+//      $0.height.equalTo(56)
+      
+      $0.top.equalTo(loginButton.snp.bottom).offset(8)
       $0.centerX.equalToSuperview()
-      $0.left.equalToSuperview().offset(16)
-      $0.right.equalToSuperview().offset(-16)
-      $0.height.equalTo(56)
+      $0.leading.trailing.equalToSuperview().inset(16)
     }
   }
 }

@@ -5,10 +5,9 @@
 //  Created by pc on 9/6/24.
 //
 
-import Foundation
-
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -23,8 +22,8 @@ final class MyRequestsCell: UICollectionViewCell {
     $0.image = UIImage(named: "profile")
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
-    $0.backgroundColor = .white
     $0.layer.cornerRadius = 40
+    
   }
   
   let nameLabel = UILabel().then {
@@ -33,7 +32,7 @@ final class MyRequestsCell: UICollectionViewCell {
     $0.font = .boldSystemFont(ofSize: 18)
   }
   
-  private let statusLabel = UILabel().then {
+  let statusLabel = UILabel().then {
     $0.text = "상대방 수락 대기중"
     $0.textAlignment = .center
     $0.font = .systemFont(ofSize: 16)
@@ -44,6 +43,10 @@ final class MyRequestsCell: UICollectionViewCell {
     self.backgroundColor = .white
     
     configureUI()
+  }
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    imageView.image = nil
   }
   
   required init?(coder: NSCoder) {
@@ -77,12 +80,17 @@ final class MyRequestsCell: UICollectionViewCell {
     }
   }
   
-  func configure(imageUrl: String, name: String, requester: String, target: String) {
+  func configure(imageUrl: String, name: String, requester: String, target: String, status: String) {
     if let url = URL(string: imageUrl) {
       imageView.kf.setImage(with: url)
     }
-    nameLabel.text = "\(name) -> 박동현"
+    nameLabel.text = "나 -> \(name)"
     requesterId = requester
     targetId = target
+    if status == "approved" {
+      statusLabel.text = "맞나만나 진행중"
+    } else {
+      statusLabel.text = "상대방 수락 대기중"
+    }
   }
 }

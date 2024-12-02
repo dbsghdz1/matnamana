@@ -61,7 +61,7 @@ final class ReputationView: BaseView {
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
     let groupSize = NSCollectionLayoutSize(
-      widthDimension: .absolute(120),
+      widthDimension: .absolute(130),
       heightDimension: .absolute(160)
     )
     
@@ -137,6 +137,7 @@ final class ReputationView: BaseView {
       $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(20)
       $0.centerX.equalToSuperview()
       $0.width.height.equalToSuperview()
+      $0.bottom.equalTo(self.safeAreaLayoutGuide)
     }
   }
 }

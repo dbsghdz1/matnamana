@@ -20,6 +20,15 @@ final class TotalQuestionView: UIView {
   let questionSegement = UISegmentedControl(items: ["팩트 질문", "가치관 질문", "커리어 질문"]).then {
     $0.selectedSegmentIndex = 0
     $0.selectedSegmentTintColor = .manaMainColor
+    $0.backgroundColor = .white
+    let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+    $0.setTitleTextAttributes(titleTextAttributes, for: .normal)
+    let titleTextAttributes2 = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    $0.setTitleTextAttributes(titleTextAttributes2, for: .selected)
+    
+    $0.layer.cornerRadius = CGRectGetHeight($0.bounds) / 2
+    $0.layer.borderColor = UIColor.white.cgColor
+    $0.layer.borderWidth = 1
   }
   
   override init(frame: CGRect) {

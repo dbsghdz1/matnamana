@@ -59,6 +59,8 @@ final class FirebaseManager {
     }
   }
   
+  
+  
   func updatePresetQuestions(for userId: String, presetQuestions: [User.PresetQuestion], completion: @escaping (Bool, Error?) -> Void) {
     let data: [[String: Any]] = presetQuestions.map { question in
       return [
@@ -170,6 +172,27 @@ final class FirebaseManager {
   
   func getUserInfo(nickName: String, completion: @escaping (User?, Error?) -> Void) {
     let query = db.collection("users").whereField("info.nickName", isEqualTo: nickName)
+    query.getDocuments { (snapShot, error) in
+      guard let snapshot = snapShot, error == nil else {
+        completion(nil, error)
+        return
+      }
+      
+      if let document = snapshot.documents.first {
+        do {
+          let user = try document.data(as: User.self)
+          completion(user, nil)
+        } catch {
+          completion(nil, error)
+        }
+      } else {
+        completion(nil, nil)
+      }
+    }
+  }
+  
+  func getUserInfoWithName(name: String, completion: @escaping (User?, Error?) -> Void) {
+    let query = db.collection("users").whereField("info.name", isEqualTo: name)
     query.getDocuments { (snapShot, error) in
       guard let snapshot = snapShot, error == nil else {
         completion(nil, error)
