@@ -10,7 +10,6 @@ struct User: Codable {
   let preset: [PresetQuestion]
   let friendList: [Friend]
   let userId: String
-//  let reputationId: String
 }
 
 extension User {
